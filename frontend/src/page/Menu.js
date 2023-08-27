@@ -3,23 +3,39 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import AllProduct from "../component/AllProduct";
 import { addCartItem } from "../redux/productSlide";
+import { toast } from "react-hot-toast";
+import { loginSuccess } from "../redux/authSlice";
 
 const Menu = () => {
   const { filterby } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const productData = useSelector((state) => state.product.productList);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  const productDisplay = productData.filter((el) => el._id === filterby)[0];
+  const productDisplay = productData.find((el) => el._id === filterby);
 
-  const handleAddCartProduct = (e) => {
-    dispatch(addCartItem(productDisplay));
+  const handleAddCartProduct = () => {
+    if (isAuthenticated) {
+      dispatch(addCartItem(productDisplay));
+      toast.success("Item added to cart!");
+    } else {
+      toast.error("Please log in to add items to your cart.");
+    }
   };
 
   const handleBuy = () => {
-    dispatch(addCartItem(productDisplay));
-    navigate("/cart");
+    if (isAuthenticated) {
+      dispatch(addCartItem(productDisplay));
+      navigate("/cart");
+    } else {
+      toast.error("Please log in to make a purchase.");
+    }
   };
+
+  if (!productDisplay) {
+    return <div>Some Problem occurs, Please Try Again After Sometime!!</div>;
+  }
   return (
     <div className="p-2 md:p-4">
       <div className="w-full max-w-4xl m-auto md:flex bg-white">
@@ -27,6 +43,7 @@ const Menu = () => {
           <img
             src={productDisplay.image}
             className="hover:scale-105 transition-all h-full"
+            alt="Loading..."
           />
         </div>
         <div className="flex flex-col gap-1">

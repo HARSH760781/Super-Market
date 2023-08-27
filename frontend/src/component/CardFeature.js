@@ -1,21 +1,28 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addCartItem } from "../redux/productSlide";
+import { addCartItem, increaseQty } from "../redux/productSlide";
+import { toast } from "react-hot-toast";
 
 const CardFeature = ({ image, name, price, category, loading, id }) => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
   const handleAddCartProduct = (e) => {
-    dispatch(
-      addCartItem({
-        _id: id,
-        name: name,
-        price: price,
-        category: category,
-        image: image,
-      })
-    );
+    if (isAuthenticated) {
+      dispatch(
+        addCartItem({
+          _id: id,
+          name: name,
+          price: price,
+          category: category,
+          image: image,
+        })
+      );
+      toast.success("Item added to cart!");
+    } else {
+      toast.error("Please log in to add items to your cart.");
+    }
   };
 
   return (

@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRedux } from "../redux/userSlice";
+import { loginSuccess } from "../redux/authSlice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -52,8 +53,11 @@ const Login = () => {
 
       toast(dataRes.message);
 
+      console.log(dataRes);
+
       if (dataRes.alert) {
         dispatch(loginRedux(dataRes));
+        dispatch(loginSuccess({ user: dataRes.user }));
         setTimeout(() => {
           navigate("/");
         }, 1000);

@@ -8,7 +8,7 @@ import { logoutRedux } from "../redux/userSlice";
 import { toast } from "react-hot-toast";
 
 const Header = () => {
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
   const userData = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ const Header = () => {
         <div className="flex items-center gap-4 md:gap-7">
           <nav className="gap-4 md:gap-6 text-base md:text-lg hidden md:flex">
             <Link to={""}>Home</Link>
-            <Link to={"menu/64c20ce0cc5379f45d3f12b7"}>Menu</Link>
+            <Link to={"menu/64ea2c39a6f9fd61b042ecb6"}>Menu</Link>
             <Link to={"about"}>About</Link>
             <Link to={"contact"}>Contact</Link>
           </nav>
@@ -86,7 +86,7 @@ const Header = () => {
                     Home
                   </Link>
                   <Link
-                    to={"menu/64c20ce0cc5379f45d3f12b7"}
+                    to={"menu/64ea2c39a6f9fd61b042ecb6"}
                     className="px-2 py-1"
                   >
                     Menu

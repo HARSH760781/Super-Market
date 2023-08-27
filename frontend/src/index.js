@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -46,4 +45,3 @@ root.render(
     <RouterProvider router={router} />
   </Provider>
 );
-reportWebVitals();

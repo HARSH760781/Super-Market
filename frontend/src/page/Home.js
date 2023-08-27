@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CardFeature from "../component/CardFeature";
 import HomeCard from "../component/HomeCard";
 import { GrPrevious, GrNext } from "react-icons/gr";
@@ -7,10 +7,23 @@ import FilterProduct from "../component/FilterProduct";
 import AllProduct from "../component/AllProduct";
 import { Link } from "react-router-dom";
 import { animateScroll as scroll } from "react-scroll";
+import { setDataProduct } from "../redux/productSlide";
 
 const Home = () => {
   const productData = useSelector((state) => state.product.productList);
   const homeProductCartList = productData.slice(1, 5);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Fetch data from API and dispatch the action to set data in Redux store
+    const fetchData = async () => {
+      const response = await fetch("your-api-endpoint");
+      const data = await response.json();
+      dispatch(setDataProduct(data));
+    };
+
+    fetchData();
+  }, [dispatch]);
   const homeProductCartListVegetables = productData.filter(
     (el) => el.category === "vegetable",
     []
